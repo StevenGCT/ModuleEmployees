@@ -12,18 +12,17 @@ using ModuleEmployees.Context;
 namespace ModuleEmployees.Migrations
 {
     [DbContext(typeof(AplicationDBContext))]
-    [Migration("20221128023929_InitialMigration")]
+    [Migration("20221128155049_InitialMigration")]
     partial class InitialMigration
     {
-        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.0")
+                .HasAnnotation("ProductVersion", "6.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("ModuleEmployees.Models.Employee", b =>
                 {
@@ -31,7 +30,7 @@ namespace ModuleEmployees.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EmployeeId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EmployeeId"), 1L, 1);
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -78,8 +77,8 @@ namespace ModuleEmployees.Migrations
 
                     b.Property<string>("Type")
                         .IsRequired()
-                        .HasMaxLength(1)
-                        .HasColumnType("nvarchar(1)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.HasKey("EmployeeId");
 
@@ -94,7 +93,7 @@ namespace ModuleEmployees.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EventId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EventId"), 1L, 1);
 
                     b.Property<string>("AddressEvent")
                         .IsRequired()

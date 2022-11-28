@@ -29,12 +29,12 @@ namespace ModuleEmployees.Models
         public string Address { get; set; }
 
         [Required(ErrorMessage = "The Phone is required for Employees")]
-        [StringLength(1, ErrorMessage = "The {0} must be: minimum {8} and maximum {8}", MinimumLength = 1)]
+        [StringLength(10, ErrorMessage = "The {0} must be: minimum {8} and maximum {10}", MinimumLength = 8)]
         public string Type { get; set; }
 
         [Required(ErrorMessage = "The Phone is required for Employees")]
         [StringLength(7, ErrorMessage = "The {0} must be: minimum {7} and maximum {8}", MinimumLength = 8)]
-        public string Ci { get; set; }
+        public string Ci { get; set; }  
 
         [Required(ErrorMessage = "The Birthday is required")]
         [DataType(DataType.Date)]
