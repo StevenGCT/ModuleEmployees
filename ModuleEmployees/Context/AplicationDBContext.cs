@@ -9,8 +9,9 @@ namespace ModuleEmployees.Context
         {
 
         }
-        public DbSet<Employee> Employees { get; set; }
-
-        public DbSet<Event> Events { get; set; }
+        public DbSet<ModuleEmployees.Models.Employee> Employee { get; set; }
+        public DbSet<ModuleEmployees.Models.Event> Event { get; set; }
+        public DbSet<ModuleEmployees.Models.Presence> Presence { get; set; }
+        public DbSet<ModuleEmployees.Models.Schedule> Schedule { get; set; }
     }
 }
