@@ -1,28 +1,25 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ModuleEmployees.Models
 {
     public class Schedule
     {
-        [Key]
         public int ScheduleId { get; set; }
+        [Required(ErrorMessage = "The Day is required")]
+        public string NameDay { get; set; }
+        [Required(ErrorMessage = "The StartTime is required")]
+        public TimeSpan StartTime { get; set; }
+        [Required(ErrorMessage = "The FinalTime is required")]
+        public TimeSpan FinalTime { get; set; }
+        [Required(ErrorMessage = "The Status is required for Employees")]
+        public char Status { get; set; } = '1';
 
-        [Required(ErrorMessage = "The Day is required for Schedule")]
-        [StringLength(11, ErrorMessage = "The {0} must be: minimum {3} and maximum {50}", MinimumLength = 5)]
-        public string Day { get; set; }
+        [Required(ErrorMessage = "The RegisterDate is required")]
+        [DataType(DataType.Date)]
+        public DateTime RegisterDate { get; set; } = DateTime.Now;
 
-        [Required(ErrorMessage = "The EmployeeId is required for Schedule")]
-        public TimeOnly StartTime { get; set; }
-
-        [Required(ErrorMessage = "The EndTime is required for Schedule")]
-        public TimeOnly EndTime { get; set; }
-
-        [Required(ErrorMessage = "The Status is required for Schedule")]
-        public char Status { get; set; }
-
-        [Required(ErrorMessage = "The RegisterDate is required for Schedule")]
-        public DateTime RegisterDate { get; set; }
-
+        //---
+        public int EmployeeId { get; set; }
+        public Employee? Employee { get; set; }
     }
 }

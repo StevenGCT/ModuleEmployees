@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ModuleEmployees.Models;
 
 namespace ModuleEmployees.Context
 {
@@ -8,6 +9,10 @@ namespace ModuleEmployees.Context
         {
 
         }
+        public DbSet<Employee> Employees { get; set; }
 
+        public DbSet<Event> Events { get; set; }
+        public DbSet<Presence> Presences { get; set; }
+        public DbSet<Schedule> Schedules { get; set; }
     }
 }

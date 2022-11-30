@@ -1,20 +1,24 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using NuGet.ProjectModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace ModuleEmployees.Models
 {
     public class Presence
     {
-        [Key]
         public int PresenceId { get; set; }
+        [Required(ErrorMessage = "The DateAttendance is required")]
+        public DateTime DateAttendance { get; set; }
+        [Required(ErrorMessage = "The AdmissionTime is required")]
+        public TimeSpan AdmissionTime { get; set; }
+        [Required(ErrorMessage = "The DepartureTime is required")]
+        public TimeSpan DepartureTime { get; set; }
+        [Required(ErrorMessage = "The Status is required for Employees")]
+        public char Status { get; set; } = '1';
 
-        [Required(ErrorMessage = "The EmployeeId is required for Presence")]
+        [Required(ErrorMessage = "The RegisterDate is required")]
+        [DataType(DataType.Date)]
+        public DateTime RegisterDate { get; set; } = DateTime.Now;
         public int EmployeeId { get; set; }
-
-        [Required(ErrorMessage = "The EventId is required for Presence")]
-        public int EventId { get; set; }
-
-        [Required(ErrorMessage = "The Status is required for Presence")]
-        public char Status { get; set; }
+        public Employee? Employee { get; set; }
     }
 }
