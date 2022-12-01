@@ -47,6 +47,6 @@ namespace ModuleEmployees.Models
 
         public List<Event>? Events  { get; set; }
         public Schedule? Schedule { get; set; }
-        public List<Presence> Presences { get; set; }
+        public List<Presence>? Presences { get; set; } //Cambio para registrar empleados
     }
 }
