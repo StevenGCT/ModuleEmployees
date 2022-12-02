@@ -7,7 +7,7 @@ namespace ModuleEmployees.Models
         public int ScheduleId { get; set; }
 
         [Required(ErrorMessage = "The Name Day is required")]
-        [Range(5, 10, ErrorMessage = "Please enter a value between 5 and 10 characters")]
+        [StringLength(10, ErrorMessage = "Please enter a value between 5 and 10 characters", MinimumLength = 5)]
         [DataType(DataType.Text)]
         public string NameDay { get; set; }
 
