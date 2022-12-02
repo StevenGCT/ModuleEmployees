@@ -84,6 +84,26 @@ namespace ModuleEmployees.Controllers
             return CreatedAtAction("GetEvent", new { id = @event.EventId }, @event);
         }
 
+        [HttpPost("addEmployeesToEvent")]
+        public async Task<ActionResult<Event>> AddCharacterSkill(EmployeeEvent employeeEvent)
+
+        {
+            var evento = await _context.Events
+                .Where(c => c.EventId == employeeEvent.EventId)
+                .Include(c => c.Employees)
+                .FirstOrDefaultAsync();
+            if (evento == null)
+                return NotFound();
+            var employee = await _context.Employees.FindAsync(employeeEvent.EmployeeId);
+            if (employee == null)
+                return NotFound();
+
+            evento.Employees.Add(employee);
+            await _context.SaveChangesAsync();
+
+            return evento;
+        }
+
         // DELETE: api/Events/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEvent(int id)
