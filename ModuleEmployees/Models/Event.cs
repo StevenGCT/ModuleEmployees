@@ -10,6 +10,11 @@ namespace ModuleEmployees.Models
         [Required(ErrorMessage = "The AddressEvent is required for Employees")]
         public string AddressEvent { get; set; }
 
+        [Required(ErrorMessage = "The nameEvent is required for Employees")]
+        [Range(4, 50, ErrorMessage = "Please enter a value between 4 and 50 characters")]
+        [DataType(DataType.Text)]
+        public string NameEvent { get; set; }
+
         [Required(ErrorMessage = "The DateEvent is required")]
         [DataType(DataType.Date)]
         public DateTime DateEvent { get; set; } = DateTime.Now;
