@@ -8,10 +8,11 @@ namespace ModuleEmployees.Models
         public int EventId { get; set; }
 
         [Required(ErrorMessage = "The AddressEvent is required for Employees")]
+        [StringLength(120, ErrorMessage = "Please enter a value between 5 and 120 characters", MinimumLength = 5)]
         public string AddressEvent { get; set; }
 
         [Required(ErrorMessage = "The nameEvent is required for Employees")]
-        [Range(4, 50, ErrorMessage = "Please enter a value between 4 and 50 characters")]
+        [StringLength(80, ErrorMessage = "Please enter a value between 4 and 80 characters", MinimumLength =4)]
         [DataType(DataType.Text)]
         public string NameEvent { get; set; }
 
