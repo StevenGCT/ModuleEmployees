@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace ModuleEmployees.Models
 {
@@ -27,6 +28,7 @@ namespace ModuleEmployees.Models
         [DataType(DataType.Date)]
         public DateTime RegisterDate { get; set; } = DateTime.Now;
         //---
+        [JsonIgnore]//Para el filtrado de eventos
         public List<Employee>? Employees { get; set; } //Para hacer realacion con la otra tabla (ICollection = 1 a muchos)
     }
 }
