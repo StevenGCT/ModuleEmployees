@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace ModuleEmployees.Models
 {
@@ -13,7 +13,7 @@ namespace ModuleEmployees.Models
         public string AddressEvent { get; set; }
 
         [Required(ErrorMessage = "The nameEvent is required for Employees")]
-        [StringLength(80, ErrorMessage = "Please enter a value between 4 and 80 characters", MinimumLength = 4)]
+        [StringLength(80, ErrorMessage = "Please enter a value between 4 and 80 characters", MinimumLength =4)]
         [DataType(DataType.Text)]
         public string NameEvent { get; set; }
 
@@ -28,7 +28,7 @@ namespace ModuleEmployees.Models
         [DataType(DataType.Date)]
         public DateTime RegisterDate { get; set; } = DateTime.Now;
         //---
-        [JsonIgnore]
+        [JsonIgnore]//Para el filtrado de eventos
         public List<Employee>? Employees { get; set; } //Para hacer realacion con la otra tabla (ICollection = 1 a muchos)
     }
 }

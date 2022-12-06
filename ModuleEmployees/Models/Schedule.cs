@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿
+using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 
 namespace ModuleEmployees.Models
 {
@@ -25,9 +27,9 @@ namespace ModuleEmployees.Models
         [Required(ErrorMessage = "The RegisterDate is required")]
         [DataType(DataType.Date)]
         public DateTime RegisterDate { get; set; } = DateTime.Now;
-
         //---
-        public int EmployeeId { get; set; }
-        public Employee? Employee { get; set; }
+        [JsonIgnore]
+
+        public List<Employee>? Employees { get; set; }
     }
 }

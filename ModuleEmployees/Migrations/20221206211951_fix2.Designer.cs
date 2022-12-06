@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ModuleEmployees.Context;
 
@@ -11,9 +12,10 @@ using ModuleEmployees.Context;
 namespace ModuleEmployees.Migrations
 {
     [DbContext(typeof(AplicationDBContext))]
-    partial class AplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20221206211951_fix2")]
+    partial class fix2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,21 +37,6 @@ namespace ModuleEmployees.Migrations
                     b.HasIndex("EventsEventId");
 
                     b.ToTable("EmployeeEvent");
-                });
-
-            modelBuilder.Entity("EmployeeSchedule", b =>
-                {
-                    b.Property<int>("EmployeesEmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ScheduleId")
-                        .HasColumnType("int");
-
-                    b.HasKey("EmployeesEmployeeId", "ScheduleId");
-
-                    b.HasIndex("ScheduleId");
-
-                    b.ToTable("EmployeeSchedule");
                 });
 
             modelBuilder.Entity("ModuleEmployees.Models.Employee", b =>
@@ -188,6 +175,9 @@ namespace ModuleEmployees.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ScheduleId"), 1L, 1);
 
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
                     b.Property<TimeSpan>("FinalTime")
                         .HasColumnType("time");
 
@@ -208,6 +198,8 @@ namespace ModuleEmployees.Migrations
 
                     b.HasKey("ScheduleId");
 
+                    b.HasIndex("EmployeeId");
+
                     b.ToTable("Schedules");
                 });
 
@@ -226,21 +218,6 @@ namespace ModuleEmployees.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("EmployeeSchedule", b =>
-                {
-                    b.HasOne("ModuleEmployees.Models.Employee", null)
-                        .WithMany()
-                        .HasForeignKey("EmployeesEmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ModuleEmployees.Models.Schedule", null)
-                        .WithMany()
-                        .HasForeignKey("ScheduleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("ModuleEmployees.Models.Presence", b =>
                 {
                     b.HasOne("ModuleEmployees.Models.Employee", "Employee")
@@ -252,9 +229,22 @@ namespace ModuleEmployees.Migrations
                     b.Navigation("Employee");
                 });
 
+            modelBuilder.Entity("ModuleEmployees.Models.Schedule", b =>
+                {
+                    b.HasOne("ModuleEmployees.Models.Employee", "Employee")
+                        .WithMany("Schedule")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+                });
+
             modelBuilder.Entity("ModuleEmployees.Models.Employee", b =>
                 {
                     b.Navigation("Presences");
+
+                    b.Navigation("Schedule");
                 });
 #pragma warning restore 612, 618
         }
