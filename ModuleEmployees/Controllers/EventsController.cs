@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ModuleEmployees.Context;
 using ModuleEmployees.Models;
+using NuGet.Versioning;
 
 namespace ModuleEmployees.Controllers
 {
@@ -25,7 +26,7 @@ namespace ModuleEmployees.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Event>>> GetEvents()
         {
-            return await _context.Events.ToListAsync();
+            return await _context.Events.Where(e => e.Status == '1').Include(e => e.Employees).ToListAsync();
         }
 
         // GET: api/Events/5
@@ -85,7 +86,7 @@ namespace ModuleEmployees.Controllers
         }
 
         [HttpPost("addEmployeesToEvent")]
-        public async Task<ActionResult<Event>> AddCharacterSkill(EmployeeEvent employeeEvent)
+        public async Task<ActionResult<Event>> AddEmployeeEvent(EmployeeEvent employeeEvent)
 
         {
             var evento = await _context.Events
