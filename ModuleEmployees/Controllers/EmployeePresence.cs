@@ -26,7 +26,6 @@ namespace ModuleEmployees.Controllers
         {
             var employees = await _context.Presences
                 .Where(c => c.EmployeeId == Id)
-                .Include(c => c.Employee)
                 .ToListAsync();
 
             return employees;
