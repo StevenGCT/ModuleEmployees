@@ -83,6 +83,14 @@ namespace ModuleEmployees.Controllers
 
             return CreatedAtAction("GetSchedule", new { id = schedule.ScheduleId }, schedule);
         }
+        //[HttpPost]
+        //public async Task<ActionResult<Schedule>> AddScheduleEmployee(Schedule schedule)
+        //{
+        //    _context.Schedules.Add(schedule);
+        //    await _context.SaveChangesAsync();
+
+        //    return CreatedAtAction("GetSchedule", new { id = schedule.ScheduleId }, schedule);
+        //}
 
         // DELETE: api/Schedules/5
         [HttpDelete("{id}")]
