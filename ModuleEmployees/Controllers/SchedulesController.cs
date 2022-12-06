@@ -83,14 +83,26 @@ namespace ModuleEmployees.Controllers
 
             return CreatedAtAction("GetSchedule", new { id = schedule.ScheduleId }, schedule);
         }
-        //[HttpPost]
-        //public async Task<ActionResult<Schedule>> AddScheduleEmployee(Schedule schedule)
-        //{
-        //    _context.Schedules.Add(schedule);
-        //    await _context.SaveChangesAsync();
+        ///
+        [HttpPost("addEmployeesSchedule")]
+        public async Task<ActionResult<Schedule>> AddScheduleEmployee(EmployeeSchedule employeeSchedule)
 
-        //    return CreatedAtAction("GetSchedule", new { id = schedule.ScheduleId }, schedule);
-        //}
+        {
+            var schedule = await _context.Schedules
+                .Where(c => c.ScheduleId == employeeSchedule.ScheduleId)
+                .Include(c => c.Employees)
+                .FirstOrDefaultAsync();
+            if (schedule == null)
+                return NotFound();
+            var employee = await _context.Employees.FindAsync(employeeSchedule.EmployeeId);
+            if (employee == null)
+                return NotFound();
+
+            schedule.Employees.Add(employee);
+            await _context.SaveChangesAsync();
+
+            return schedule;
+        }
 
         // DELETE: api/Schedules/5
         [HttpDelete("{id}")]
