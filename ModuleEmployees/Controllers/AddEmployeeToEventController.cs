@@ -32,9 +32,31 @@ namespace ModuleEmployees.Controllers
                 return NotFound();
 
             evento.Employees.Add(employee);
+        
             await _context.SaveChangesAsync();
 
             return evento;
+        }
+
+        [HttpPut("PutStatusEmplyeeEvent")]
+        public async Task<IActionResult> PutStatusEmplyeeEvent(int idEmployee, EmployeeEvent employeeEvent)
+        {
+            if (idEmployee != employeeEvent.EmployeeId)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(employeeEvent).State = EntityState.Modified;
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
         }
     }
 }

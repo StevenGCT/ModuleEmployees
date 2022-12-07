@@ -24,7 +24,6 @@ namespace ModuleEmployees.Context
         //}
 
         public DbSet<Employee> Employees { get; set; }
-
         public DbSet<Event> Events { get; set; }
         public DbSet<EmployeeEvent> EmployeeEvent { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
