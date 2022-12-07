@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ModuleEmployees.Migrations
 {
-    public partial class fix1 : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -70,15 +70,15 @@ namespace ModuleEmployees.Migrations
                 name: "EmployeeEvent",
                 columns: table => new
                 {
-                    EmployeeId = table.Column<int>(type: "int", nullable: false),
+                    EmployeesEmployeeId = table.Column<int>(type: "int", nullable: false),
                     EventsEventId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EmployeeEvent", x => new { x.EmployeeId, x.EventsEventId });
+                    table.PrimaryKey("PK_EmployeeEvent", x => new { x.EmployeesEmployeeId, x.EventsEventId });
                     table.ForeignKey(
-                        name: "FK_EmployeeEvent_Employees_EmployeeId",
-                        column: x => x.EmployeeId,
+                        name: "FK_EmployeeEvent_Employees_EmployeesEmployeeId",
+                        column: x => x.EmployeesEmployeeId,
                         principalTable: "Employees",
                         principalColumn: "EmployeeId",
                         onDelete: ReferentialAction.Cascade);
@@ -94,21 +94,21 @@ namespace ModuleEmployees.Migrations
                 name: "EmployeeSchedule",
                 columns: table => new
                 {
-                    EmployeeId = table.Column<int>(type: "int", nullable: false),
-                    ScheduleId = table.Column<int>(type: "int", nullable: false)
+                    EmployeesEmployeeId = table.Column<int>(type: "int", nullable: false),
+                    SchedulesScheduleId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EmployeeSchedule", x => new { x.EmployeeId, x.ScheduleId });
+                    table.PrimaryKey("PK_EmployeeSchedule", x => new { x.EmployeesEmployeeId, x.SchedulesScheduleId });
                     table.ForeignKey(
-                        name: "FK_EmployeeSchedule_Employees_EmployeeId",
-                        column: x => x.EmployeeId,
+                        name: "FK_EmployeeSchedule_Employees_EmployeesEmployeeId",
+                        column: x => x.EmployeesEmployeeId,
                         principalTable: "Employees",
                         principalColumn: "EmployeeId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_EmployeeSchedule_Schedules_ScheduleId",
-                        column: x => x.ScheduleId,
+                        name: "FK_EmployeeSchedule_Schedules_SchedulesScheduleId",
+                        column: x => x.SchedulesScheduleId,
                         principalTable: "Schedules",
                         principalColumn: "ScheduleId",
                         onDelete: ReferentialAction.Cascade);
@@ -120,9 +120,9 @@ namespace ModuleEmployees.Migrations
                 column: "EventsEventId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EmployeeSchedule_ScheduleId",
+                name: "IX_EmployeeSchedule_SchedulesScheduleId",
                 table: "EmployeeSchedule",
-                column: "ScheduleId");
+                column: "SchedulesScheduleId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
