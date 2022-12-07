@@ -24,13 +24,13 @@ namespace ModuleEmployees.Migrations
 
             modelBuilder.Entity("EmployeeEvent", b =>
                 {
-                    b.Property<int>("EmployeeId")
+                    b.Property<int>("EmployeesEmployeeId")
                         .HasColumnType("int");
 
                     b.Property<int>("EventsEventId")
                         .HasColumnType("int");
 
-                    b.HasKey("EmployeeId", "EventsEventId");
+                    b.HasKey("EmployeesEmployeeId", "EventsEventId");
 
                     b.HasIndex("EventsEventId");
 
@@ -42,12 +42,12 @@ namespace ModuleEmployees.Migrations
                     b.Property<int>("EmployeesEmployeeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ScheduleId")
+                    b.Property<int>("SchedulesScheduleId")
                         .HasColumnType("int");
 
-                    b.HasKey("EmployeeId", "ScheduleId");
+                    b.HasKey("EmployeesEmployeeId", "SchedulesScheduleId");
 
-                    b.HasIndex("ScheduleId");
+                    b.HasIndex("SchedulesScheduleId");
 
                     b.ToTable("EmployeeSchedule");
                 });
@@ -181,7 +181,7 @@ namespace ModuleEmployees.Migrations
                 {
                     b.HasOne("ModuleEmployees.Models.Employee", null)
                         .WithMany()
-                        .HasForeignKey("EmployeeId")
+                        .HasForeignKey("EmployeesEmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -196,13 +196,13 @@ namespace ModuleEmployees.Migrations
                 {
                     b.HasOne("ModuleEmployees.Models.Employee", null)
                         .WithMany()
-                        .HasForeignKey("EmployeeId")
+                        .HasForeignKey("EmployeesEmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ModuleEmployees.Models.Schedule", null)
                         .WithMany()
-                        .HasForeignKey("ScheduleId")
+                        .HasForeignKey("SchedulesScheduleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
