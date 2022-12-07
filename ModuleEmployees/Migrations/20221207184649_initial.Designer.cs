@@ -12,8 +12,8 @@ using ModuleEmployees.Context;
 namespace ModuleEmployees.Migrations
 {
     [DbContext(typeof(AplicationDBContext))]
-    [Migration("20221207151237_fix1")]
-    partial class fix1
+    [Migration("20221207184649_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -44,12 +44,12 @@ namespace ModuleEmployees.Migrations
                     b.Property<int>("EmployeesEmployeeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ScheduleId")
+                    b.Property<int>("SchedulesScheduleId")
                         .HasColumnType("int");
 
-                    b.HasKey("EmployeesEmployeeId", "ScheduleId");
+                    b.HasKey("EmployeesEmployeeId", "SchedulesScheduleId");
 
-                    b.HasIndex("ScheduleId");
+                    b.HasIndex("SchedulesScheduleId");
 
                     b.ToTable("EmployeeSchedule");
                 });
@@ -204,7 +204,7 @@ namespace ModuleEmployees.Migrations
 
                     b.HasOne("ModuleEmployees.Models.Schedule", null)
                         .WithMany()
-                        .HasForeignKey("ScheduleId")
+                        .HasForeignKey("SchedulesScheduleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
