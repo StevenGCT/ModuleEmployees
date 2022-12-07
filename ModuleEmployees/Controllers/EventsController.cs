@@ -26,7 +26,10 @@ namespace ModuleEmployees.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Event>>> GetEvents()
         {
-            return await _context.Events.Where(e => e.Status == '1').Include(e => e.Employees).ToListAsync();
+            return await _context.Events
+                .Where(e => e.Status == '1')
+                .Include(e => e.Employees)
+                .ToListAsync();
         }
 
         // GET: api/Events/5
@@ -83,26 +86,6 @@ namespace ModuleEmployees.Controllers
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetEvent", new { id = @event.EventId }, @event);
-        }
-
-        [HttpPost("addEmployeesToEvent")]
-        public async Task<ActionResult<Event>> AddEmployeeEvent(EmployeeEvent employeeEvent)
-
-        {
-            var evento = await _context.Events
-                .Where(c => c.EventId == employeeEvent.EventId)
-                .Include(c => c.Employees)
-                .FirstOrDefaultAsync();
-            if (evento == null)
-                return NotFound();
-            var employee = await _context.Employees.FindAsync(employeeEvent.EmployeeId);
-            if (employee == null)
-                return NotFound();
-
-            evento.Employees.Add(employee);
-            await _context.SaveChangesAsync();
-
-            return evento;
         }
 
         // DELETE: api/Events/5

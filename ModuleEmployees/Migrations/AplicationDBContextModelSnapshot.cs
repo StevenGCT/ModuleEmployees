@@ -24,13 +24,13 @@ namespace ModuleEmployees.Migrations
 
             modelBuilder.Entity("EmployeeEvent", b =>
                 {
-                    b.Property<int>("EmployeesEmployeeId")
+                    b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
                     b.Property<int>("EventsEventId")
                         .HasColumnType("int");
 
-                    b.HasKey("EmployeesEmployeeId", "EventsEventId");
+                    b.HasKey("EmployeeId", "EventsEventId");
 
                     b.HasIndex("EventsEventId");
 
@@ -45,7 +45,7 @@ namespace ModuleEmployees.Migrations
                     b.Property<int>("ScheduleId")
                         .HasColumnType("int");
 
-                    b.HasKey("EmployeesEmployeeId", "ScheduleId");
+                    b.HasKey("EmployeeId", "ScheduleId");
 
                     b.HasIndex("ScheduleId");
 
@@ -146,40 +146,6 @@ namespace ModuleEmployees.Migrations
                     b.ToTable("Events");
                 });
 
-            modelBuilder.Entity("ModuleEmployees.Models.Presence", b =>
-                {
-                    b.Property<int>("PresenceId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PresenceId"), 1L, 1);
-
-                    b.Property<TimeSpan>("AdmissionTime")
-                        .HasColumnType("time");
-
-                    b.Property<DateTime>("DateAttendance")
-                        .HasColumnType("datetime2");
-
-                    b.Property<TimeSpan>("DepartureTime")
-                        .HasColumnType("time");
-
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("RegisterDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(1)");
-
-                    b.HasKey("PresenceId");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.ToTable("Presences");
-                });
-
             modelBuilder.Entity("ModuleEmployees.Models.Schedule", b =>
                 {
                     b.Property<int>("ScheduleId")
@@ -215,7 +181,7 @@ namespace ModuleEmployees.Migrations
                 {
                     b.HasOne("ModuleEmployees.Models.Employee", null)
                         .WithMany()
-                        .HasForeignKey("EmployeesEmployeeId")
+                        .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -230,7 +196,7 @@ namespace ModuleEmployees.Migrations
                 {
                     b.HasOne("ModuleEmployees.Models.Employee", null)
                         .WithMany()
-                        .HasForeignKey("EmployeesEmployeeId")
+                        .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -239,22 +205,6 @@ namespace ModuleEmployees.Migrations
                         .HasForeignKey("ScheduleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("ModuleEmployees.Models.Presence", b =>
-                {
-                    b.HasOne("ModuleEmployees.Models.Employee", "Employee")
-                        .WithMany("Presences")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
-                });
-
-            modelBuilder.Entity("ModuleEmployees.Models.Employee", b =>
-                {
-                    b.Navigation("Presences");
                 });
 #pragma warning restore 612, 618
         }

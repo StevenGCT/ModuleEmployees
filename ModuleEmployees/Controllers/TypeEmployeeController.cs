@@ -8,25 +8,23 @@ namespace ModuleEmployees.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EmployeeEventController : ControllerBase
+    public class TypeEmployeeController : ControllerBase
     {
         private readonly AplicationDBContext _context;
 
-        public EmployeeEventController(AplicationDBContext context)
+        public TypeEmployeeController(AplicationDBContext context)
         {
             _context = context;
         }
-        //Busqueda por Id
-        [HttpGet]
-        public async Task<ActionResult<List<Employee>>> Get(int Id)
+
+        [HttpGet("{TypeEmployee}")]
+        public async Task<ActionResult<List<Employee>>> Get(string TypeEmployee)
         {
             var employees = await _context.Employees
-                .Where(c => c.EmployeeId == Id)
-                .Include(c => c.Events)
+                .Where(c => c.Type == TypeEmployee)
                 .ToListAsync();
 
             return employees;
         }
-
     }
 }
