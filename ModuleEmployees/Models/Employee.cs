@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
@@ -56,10 +57,9 @@ namespace ModuleEmployees.Models
         [DataType(DataType.Date)]
         public DateTime RegisterDate { get; set; } = DateTime.Now;
         //----
-        [JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
         public List<Event>? Events  { get; set; }
-        [JsonIgnore]
-        public List<Schedule>? Schedules { get; set; }
+        public List<Schedule>? Schedule { get; set; }
         public List<Presence>? Presences { get; set; } //Cambio para registrar empleados
     }
 }
