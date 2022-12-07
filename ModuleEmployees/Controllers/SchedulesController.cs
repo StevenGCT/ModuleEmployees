@@ -25,7 +25,7 @@ namespace ModuleEmployees.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Schedule>>> GetSchedules()
         {
-            return await _context.Schedules.Include(e => e.Employees).ToListAsync();
+            return await _context.Schedules.Where(e => e.Status == '1').Include(e => e.Employees).ToListAsync();
         }
 
         // GET: api/Schedules/5
@@ -83,29 +83,29 @@ namespace ModuleEmployees.Controllers
 
             return CreatedAtAction("GetSchedule", new { id = schedule.ScheduleId }, schedule);
         }
-        ///
-        //[HttpPost("addEmployeesSchedule")]
-        //public async Task<ActionResult<Schedule>> AddScheduleEmployee(EmployeeSchedule employeeSchedule)
+        
+        [HttpPost("addEmployeesSchedule")]
+        public async Task<ActionResult<Schedule>> AddScheduleEmployee(EmployeeSchedule employeeSchedule)
 
-        //{
-        //    var schedule = await _context.Schedules
-        //        .Where(c => c.ScheduleId == employeeSchedule.ScheduleId)
-        //        .Include(c => c.Employees)
-        //        .FirstOrDefaultAsync();
-        //    if (schedule == null)
-        //        return NotFound();
-        //    var employee = await _context.Employees.FindAsync(employeeSchedule.EmployeeId);
-        //    if (employee == null)
-        //        return NotFound();
+        {
+            var schedule = await _context.Schedules
+                .Where(c => c.ScheduleId == employeeSchedule.ScheduleId)
+                .Include(c => c.Employees)
+                .FirstOrDefaultAsync();
+            if (schedule == null)
+                return NotFound();
+            var employee = await _context.Employees.FindAsync(employeeSchedule.EmployeeId);
+            if (employee == null)
+                return NotFound();
 
-        //    schedule.Employees.Add(employee);
-        //    await _context.SaveChangesAsync();
+            schedule.Employees.Add(employee);
+            await _context.SaveChangesAsync();
 
-        //    return schedule;
-        //}
+            return schedule;
+        }
 
-    // DELETE: api/Schedules/5
-    [HttpDelete("{id}")]
+        // DELETE: api/Schedules/5
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSchedule(int id)
         {
             var schedule = await _context.Schedules.FindAsync(id);
