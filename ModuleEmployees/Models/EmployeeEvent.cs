@@ -9,5 +9,8 @@ namespace ModuleEmployees.Models
         [DataType(DataType.Date)]
         public DateTime? DateAttendance { get; set; }
         public char Status { get; set; } = '0';
+
+        //public Event Event { get; set; }
+        //public Employee Employee { get; set; }
     }
 }
