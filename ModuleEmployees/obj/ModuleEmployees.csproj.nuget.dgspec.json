@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\lenny\\Desktop\\ProyectoFinalWebIII\\ModuleEmployees\\ModuleEmployees\\ModuleEmployees.csproj": {}
+    "D:\\Univalle\\Prog Web III\\ModuleEmployees\\ModuleEmployees\\ModuleEmployees.csproj": {}
   },
   "projects": {
-    "C:\\Users\\lenny\\Desktop\\ProyectoFinalWebIII\\ModuleEmployees\\ModuleEmployees\\ModuleEmployees.csproj": {
+    "D:\\Univalle\\Prog Web III\\ModuleEmployees\\ModuleEmployees\\ModuleEmployees.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\lenny\\Desktop\\ProyectoFinalWebIII\\ModuleEmployees\\ModuleEmployees\\ModuleEmployees.csproj",
+        "projectUniqueName": "D:\\Univalle\\Prog Web III\\ModuleEmployees\\ModuleEmployees\\ModuleEmployees.csproj",
         "projectName": "ModuleEmployees",
-        "projectPath": "C:\\Users\\lenny\\Desktop\\ProyectoFinalWebIII\\ModuleEmployees\\ModuleEmployees\\ModuleEmployees.csproj",
-        "packagesPath": "C:\\Users\\lenny\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\lenny\\Desktop\\ProyectoFinalWebIII\\ModuleEmployees\\ModuleEmployees\\obj\\",
+        "projectPath": "D:\\Univalle\\Prog Web III\\ModuleEmployees\\ModuleEmployees\\ModuleEmployees.csproj",
+        "packagesPath": "C:\\Users\\Omen\\.nuget\\packages\\",
+        "outputPath": "D:\\Univalle\\Prog Web III\\ModuleEmployees\\ModuleEmployees\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\lenny\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Omen\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -65,8 +65,7 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -78,7 +77,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     }

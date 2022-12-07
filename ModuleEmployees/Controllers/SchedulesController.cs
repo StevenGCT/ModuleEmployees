@@ -25,7 +25,7 @@ namespace ModuleEmployees.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Schedule>>> GetSchedules()
         {
-            return await _context.Schedules.ToListAsync();
+            return await _context.Schedules.Include(e => e.Employees).ToListAsync();
         }
 
         // GET: api/Schedules/5
@@ -104,8 +104,8 @@ namespace ModuleEmployees.Controllers
             return schedule;
         }
 
-        // DELETE: api/Schedules/5
-        [HttpDelete("{id}")]
+    // DELETE: api/Schedules/5
+    [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSchedule(int id)
         {
             var schedule = await _context.Schedules.FindAsync(id);

@@ -12,8 +12,8 @@ using ModuleEmployees.Context;
 namespace ModuleEmployees.Migrations
 {
     [DbContext(typeof(AplicationDBContext))]
-    [Migration("20221202015932_thirdMigration")]
-    partial class thirdMigration
+    [Migration("20221207151237_fix1")]
+    partial class fix1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -39,6 +39,21 @@ namespace ModuleEmployees.Migrations
                     b.ToTable("EmployeeEvent");
                 });
 
+            modelBuilder.Entity("EmployeeSchedule", b =>
+                {
+                    b.Property<int>("EmployeesEmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ScheduleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("EmployeesEmployeeId", "ScheduleId");
+
+                    b.HasIndex("ScheduleId");
+
+                    b.ToTable("EmployeeSchedule");
+                });
+
             modelBuilder.Entity("ModuleEmployees.Models.Employee", b =>
                 {
                     b.Property<int>("EmployeeId")
@@ -49,26 +64,31 @@ namespace ModuleEmployees.Migrations
 
                     b.Property<string>("Address")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
 
                     b.Property<DateTime>("Birthday")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Ci")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("Phone")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(13)
+                        .HasColumnType("nvarchar(13)");
 
                     b.Property<string>("Photo")
                         .IsRequired()
@@ -79,7 +99,8 @@ namespace ModuleEmployees.Migrations
 
                     b.Property<string>("SecondLastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -104,59 +125,27 @@ namespace ModuleEmployees.Migrations
 
                     b.Property<string>("AddressEvent")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
 
                     b.Property<DateTime>("DateEvent")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("NameEvent")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("nvarchar(80)");
+
                     b.Property<DateTime>("RegisterDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(1)");
-
-                    b.Property<string>("nameEvent")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("EventId");
 
                     b.ToTable("Events");
-                });
-
-            modelBuilder.Entity("ModuleEmployees.Models.Presence", b =>
-                {
-                    b.Property<int>("PresenceId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PresenceId"), 1L, 1);
-
-                    b.Property<TimeSpan>("AdmissionTime")
-                        .HasColumnType("time");
-
-                    b.Property<DateTime>("DateAttendance")
-                        .HasColumnType("datetime2");
-
-                    b.Property<TimeSpan>("DepartureTime")
-                        .HasColumnType("time");
-
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("RegisterDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(1)");
-
-                    b.HasKey("PresenceId");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.ToTable("Presences");
                 });
 
             modelBuilder.Entity("ModuleEmployees.Models.Schedule", b =>
@@ -167,15 +156,13 @@ namespace ModuleEmployees.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ScheduleId"), 1L, 1);
 
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
                     b.Property<TimeSpan>("FinalTime")
                         .HasColumnType("time");
 
                     b.Property<string>("NameDay")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<DateTime>("RegisterDate")
                         .HasColumnType("datetime2");
@@ -188,9 +175,6 @@ namespace ModuleEmployees.Migrations
                         .HasColumnType("nvarchar(1)");
 
                     b.HasKey("ScheduleId");
-
-                    b.HasIndex("EmployeeId")
-                        .IsUnique();
 
                     b.ToTable("Schedules");
                 });
@@ -210,33 +194,19 @@ namespace ModuleEmployees.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ModuleEmployees.Models.Presence", b =>
+            modelBuilder.Entity("EmployeeSchedule", b =>
                 {
-                    b.HasOne("ModuleEmployees.Models.Employee", "Employee")
-                        .WithMany("Presences")
-                        .HasForeignKey("EmployeeId")
+                    b.HasOne("ModuleEmployees.Models.Employee", null)
+                        .WithMany()
+                        .HasForeignKey("EmployeesEmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Employee");
-                });
-
-            modelBuilder.Entity("ModuleEmployees.Models.Schedule", b =>
-                {
-                    b.HasOne("ModuleEmployees.Models.Employee", "Employee")
-                        .WithOne("Schedule")
-                        .HasForeignKey("ModuleEmployees.Models.Schedule", "EmployeeId")
+                    b.HasOne("ModuleEmployees.Models.Schedule", null)
+                        .WithMany()
+                        .HasForeignKey("ScheduleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Employee");
-                });
-
-            modelBuilder.Entity("ModuleEmployees.Models.Employee", b =>
-                {
-                    b.Navigation("Presences");
-
-                    b.Navigation("Schedule");
                 });
 #pragma warning restore 612, 618
         }

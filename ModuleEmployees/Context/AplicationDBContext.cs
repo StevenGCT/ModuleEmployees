@@ -9,10 +9,23 @@ namespace ModuleEmployees.Context
         {
 
         }
+
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<Presence>()
+        //         .HasOne(e => e.Employee)
+        //         .WithMany(p => p.Presences)
+        //         .HasForeignKey(ei => ei.EmployeeId);            
+            
+        //    modelBuilder.Entity<Presence>()
+        //         .HasOne(e => e.Event)
+        //         .WithMany(p => p.Presences)
+        //         .HasForeignKey(ei => ei.EventId);
+        //}
+
         public DbSet<Employee> Employees { get; set; }
 
         public DbSet<Event> Events { get; set; }
-        public DbSet<Presence> Presences { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
     }
 }
