@@ -25,14 +25,14 @@ namespace ModuleEmployees.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Schedule>>> GetSchedules()
         {
-            return await _context.Schedules.ToListAsync();
+            return await _context.Schedules.Where(s => s.Status == '1').Include(s => s.Employees).ToListAsync();
         }
-
-        // GET: api/Schedules/5
-        [HttpGet("{id}")]
+            // GET: api/Schedules/5
+            [HttpGet("{id}")]
         public async Task<ActionResult<Schedule>> GetSchedule(int id)
         {
-            var schedule = await _context.Schedules.FindAsync(id);
+                var schedule = await _context.Schedules.FindAsync(id);
+
 
             if (schedule == null)
             {
@@ -98,8 +98,10 @@ namespace ModuleEmployees.Controllers
             if (employee == null)
                 return NotFound();
 
+
             schedule.Employees.Add(employee);
             await _context.SaveChangesAsync();
+
 
             return schedule;
         }

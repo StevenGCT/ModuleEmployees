@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace ModuleEmployees.Models
 {
@@ -55,9 +56,10 @@ namespace ModuleEmployees.Models
         [DataType(DataType.Date)]
         public DateTime RegisterDate { get; set; } = DateTime.Now;
         //----
-
+        [JsonIgnore]
         public List<Event>? Events  { get; set; }
-        public List<Schedule>? Schedule { get; set; }
+        [JsonIgnore]
+        public List<Schedule>? Schedules { get; set; }
         public List<Presence>? Presences { get; set; } //Cambio para registrar empleados
     }
 }
