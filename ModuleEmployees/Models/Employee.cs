@@ -58,8 +58,12 @@ namespace ModuleEmployees.Models
         public DateTime RegisterDate { get; set; } = DateTime.Now;
         //----
         [System.Text.Json.Serialization.JsonIgnore]
+
+        
         public List<Event>? Events  { get; set; }
-        public List<Schedule>? Schedule { get; set; }
+        [System.Text.Json.Serialization.JsonIgnore]
+        public List<Schedule>? Schedules { get; set; }
+        
         public List<Presence>? Presences { get; set; } //Cambio para registrar empleados
     }
 }

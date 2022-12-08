@@ -83,8 +83,8 @@ namespace ModuleEmployees.Controllers
 
             return CreatedAtAction("GetSchedule", new { id = schedule.ScheduleId }, schedule);
         }
-        ///
-        [HttpPost("addEmployeesSchedule")]
+        ///añadir empleados horarios
+         [HttpPost("addEmployeesSchedule")]
         public async Task<ActionResult<Schedule>> AddScheduleEmployee(EmployeeSchedule employeeSchedule)
 
         {
