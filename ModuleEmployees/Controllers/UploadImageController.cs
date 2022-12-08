@@ -14,9 +14,14 @@ namespace ModuleEmployees.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UploadImage(IFormFile file)
+        public async Task<IActionResult> UploadImage(IFormFile file, string? fileName)
         {
-            return await _imageHandler.UploadImage(file);
+            if (fileName == null)
+            {
+                fileName = file.FileName;
+                return await _imageHandler.UploadImage(file, fileName);
+            }
+            return await _imageHandler.UploadImage(file, fileName);
         }
     }
 }

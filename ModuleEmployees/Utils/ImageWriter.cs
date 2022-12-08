@@ -5,23 +5,23 @@ namespace ModuleEmployees.Utils
 {
     public class ImageWriter : IImageWriter
     {
-        public async Task<string> UploadImage(IFormFile file)
+        public async Task<string> UploadImage(IFormFile file, string? fileName)
         {
             if (CheckIfImageFile(file))
             {
-                return await WriteFile(file);
+                return await WriteFile(file, fileName);
             }
             return "Invalid image file";
         }
 
-        private async Task<string> WriteFile(IFormFile file)
+        private async Task<string> WriteFile(IFormFile file, string? fileNameFinal)
         {
             string fileName;
             try
             {
                 var extension = new StringBuilder(".")
                     .Append(file.FileName.Split(".")[file.FileName.Split('.').Length - 1]);
-                fileName = new StringBuilder(Guid.NewGuid().ToString()).Append(extension).ToString();
+                fileName = new StringBuilder(fileNameFinal).Append(extension).ToString();
                 var path = Path.Combine(Directory.GetCurrentDirectory(),
                     "Resources/img", fileName);
                 using (var bits = new FileStream(path, FileMode.Create))
