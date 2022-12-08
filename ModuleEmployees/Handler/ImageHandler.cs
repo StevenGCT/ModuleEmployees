@@ -12,9 +12,9 @@ namespace ModuleEmployees.Handler
             _imageWriter = imageWriter;
         }
 
-        public async Task<IActionResult> UploadImage(IFormFile file)
+        public async Task<IActionResult> UploadImage(IFormFile file, string? fileName)
         {
-            var result = await _imageWriter.UploadImage(file);
+            var result = await _imageWriter.UploadImage(file, fileName);
             return new ObjectResult(result);
         }
     }
