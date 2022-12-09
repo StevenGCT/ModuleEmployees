@@ -61,5 +61,7 @@ namespace ModuleEmployees.Models
         public List<Event>? Events  { get; set; }
         [System.Text.Json.Serialization.JsonIgnore]
         public List<Schedule>? Schedules { get; set; }
+
+        public List<PresenceWork>? PresenceWorks { get; set; }
     }
 }

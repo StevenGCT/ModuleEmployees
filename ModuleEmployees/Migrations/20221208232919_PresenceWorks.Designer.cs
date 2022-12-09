@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ModuleEmployees.Context;
 
@@ -11,9 +12,10 @@ using ModuleEmployees.Context;
 namespace ModuleEmployees.Migrations
 {
     [DbContext(typeof(AplicationDBContext))]
-    partial class AplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20221208232919_PresenceWorks")]
+    partial class PresenceWorks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,6 +37,21 @@ namespace ModuleEmployees.Migrations
                     b.HasIndex("EventsEventId");
 
                     b.ToTable("EmployeeEvent");
+                });
+
+            modelBuilder.Entity("EmployeePresenceWork", b =>
+                {
+                    b.Property<int>("PresenceWorksId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("employeesEmployeeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PresenceWorksId", "employeesEmployeeId");
+
+                    b.HasIndex("employeesEmployeeId");
+
+                    b.ToTable("EmployeePresenceWork");
                 });
 
             modelBuilder.Entity("EmployeeSchedule", b =>
@@ -154,8 +171,8 @@ namespace ModuleEmployees.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("DateAttenddance")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("DateAttenddance")
+                        .HasColumnType("int");
 
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
@@ -166,9 +183,7 @@ namespace ModuleEmployees.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployeeId");
-
-                    b.ToTable("PresenceWorks");
+                    b.ToTable("PresenceWork");
                 });
 
             modelBuilder.Entity("ModuleEmployees.Models.Schedule", b =>
@@ -217,6 +232,21 @@ namespace ModuleEmployees.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("EmployeePresenceWork", b =>
+                {
+                    b.HasOne("ModuleEmployees.Models.PresenceWork", null)
+                        .WithMany()
+                        .HasForeignKey("PresenceWorksId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ModuleEmployees.Models.Employee", null)
+                        .WithMany()
+                        .HasForeignKey("employeesEmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("EmployeeSchedule", b =>
                 {
                     b.HasOne("ModuleEmployees.Models.Employee", null)
@@ -230,22 +260,6 @@ namespace ModuleEmployees.Migrations
                         .HasForeignKey("SchedulesScheduleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("ModuleEmployees.Models.PresenceWork", b =>
-                {
-                    b.HasOne("ModuleEmployees.Models.Employee", "Employee")
-                        .WithMany("PresenceWorks")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
-                });
-
-            modelBuilder.Entity("ModuleEmployees.Models.Employee", b =>
-                {
-                    b.Navigation("PresenceWorks");
                 });
 #pragma warning restore 612, 618
         }

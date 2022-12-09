@@ -19,7 +19,6 @@ namespace ModuleEmployees.Controllers
 
         [HttpPost("addEmployeesToEvent")]
         public async Task<ActionResult<Event>> AddEmployeeEvent(EmployeeEvent employeeEvent)
-
         {
             var evento = await _context.Events
                 .Where(c => c.EventId == employeeEvent.EventId)
