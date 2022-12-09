@@ -30,16 +30,18 @@ namespace ModuleEmployees.Controllers
 
         // GET: api/Employees/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Employee>> GetEmployee(int id)
+        public async Task<ActionResult<Employee>> GetPresenceWork(int id)
         {
-            var employee = await _context.Employees.FindAsync(id);
+            var presenceWork = await _context.Employees
+                                .Include(e => e.PresenceWorks)
+                                .FirstOrDefaultAsync(e => e.EmployeeId == id);
 
-            if (employee == null)
+            if (presenceWork == null)
             {
                 return NotFound();
             }
 
-            return employee;
+            return presenceWork;
         }
 
         // PUT: api/Employees/5

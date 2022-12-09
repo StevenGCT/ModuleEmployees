@@ -12,6 +12,7 @@ namespace ModuleEmployees.Models
 
         public char StatusAttendance { get; set; } = '1';
 
+        public string Status { get; set; }
         //------
         public Employee? Employee { get; set; }
         public int EmployeeId { get; set; }
