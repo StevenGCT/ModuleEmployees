@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ModuleEmployees.Context;
 
@@ -11,9 +12,10 @@ using ModuleEmployees.Context;
 namespace ModuleEmployees.Migrations
 {
     [DbContext(typeof(AplicationDBContext))]
-    partial class AplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20221208230944_fixPresenceExtra")]
+    partial class fixPresenceExtra
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,6 +37,21 @@ namespace ModuleEmployees.Migrations
                     b.HasIndex("EventsEventId");
 
                     b.ToTable("EmployeeEvent");
+                });
+
+            modelBuilder.Entity("EmployeePresenceExtra", b =>
+                {
+                    b.Property<int>("EmployeesEmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PresenceExtrasId")
+                        .HasColumnType("int");
+
+                    b.HasKey("EmployeesEmployeeId", "PresenceExtrasId");
+
+                    b.HasIndex("PresenceExtrasId");
+
+                    b.ToTable("EmployeePresenceExtra");
                 });
 
             modelBuilder.Entity("EmployeeSchedule", b =>
@@ -146,7 +163,7 @@ namespace ModuleEmployees.Migrations
                     b.ToTable("Events");
                 });
 
-            modelBuilder.Entity("ModuleEmployees.Models.PresenceWork", b =>
+            modelBuilder.Entity("ModuleEmployees.Models.PresenceExtra", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -154,15 +171,11 @@ namespace ModuleEmployees.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("DateAttenddance")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("DateAttenddance")
+                        .HasColumnType("int");
 
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StatusAttendance")
                         .IsRequired()
@@ -170,9 +183,7 @@ namespace ModuleEmployees.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployeeId");
-
-                    b.ToTable("PresenceWorks");
+                    b.ToTable("PresenceExtra");
                 });
 
             modelBuilder.Entity("ModuleEmployees.Models.Schedule", b =>
@@ -221,6 +232,21 @@ namespace ModuleEmployees.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("EmployeePresenceExtra", b =>
+                {
+                    b.HasOne("ModuleEmployees.Models.Employee", null)
+                        .WithMany()
+                        .HasForeignKey("EmployeesEmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ModuleEmployees.Models.PresenceExtra", null)
+                        .WithMany()
+                        .HasForeignKey("PresenceExtrasId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("EmployeeSchedule", b =>
                 {
                     b.HasOne("ModuleEmployees.Models.Employee", null)
@@ -234,22 +260,6 @@ namespace ModuleEmployees.Migrations
                         .HasForeignKey("SchedulesScheduleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("ModuleEmployees.Models.PresenceWork", b =>
-                {
-                    b.HasOne("ModuleEmployees.Models.Employee", "Employee")
-                        .WithMany("PresenceWorks")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
-                });
-
-            modelBuilder.Entity("ModuleEmployees.Models.Employee", b =>
-                {
-                    b.Navigation("PresenceWorks");
                 });
 #pragma warning restore 612, 618
         }

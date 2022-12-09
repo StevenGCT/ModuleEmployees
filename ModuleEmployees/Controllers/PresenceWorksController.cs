@@ -12,29 +12,27 @@ namespace ModuleEmployees.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EmployeesController : ControllerBase
+    public class PresenceWorksController : ControllerBase
     {
         private readonly AplicationDBContext _context;
 
-        public EmployeesController(AplicationDBContext context)
+        public PresenceWorksController(AplicationDBContext context)
         {
             _context = context;
         }
 
-        // GET: api/Employees
+        // GET: api/PresenceWorks
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees()
+        public async Task<ActionResult<IEnumerable<PresenceWork>>> GetPresenceWorks()
         {
-            return await _context.Employees.ToListAsync();
+            return await _context.PresenceWorks.ToListAsync();
         }
 
-        // GET: api/Employees/5
+        // GET: api/PresenceWorks/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Employee>> GetPresenceWork(int id)
+        public async Task<ActionResult<PresenceWork>> GetPresenceWork(int id)
         {
-            var presenceWork = await _context.Employees
-                                .Include(e => e.PresenceWorks)
-                                .FirstOrDefaultAsync(e => e.EmployeeId == id);
+            var presenceWork = await _context.PresenceWorks.FindAsync(id);
 
             if (presenceWork == null)
             {
@@ -44,17 +42,17 @@ namespace ModuleEmployees.Controllers
             return presenceWork;
         }
 
-        // PUT: api/Employees/5
+        // PUT: api/PresenceWorks/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEmployee(int id, Employee employee)
+        public async Task<IActionResult> PutPresenceWork(int id, PresenceWork presenceWork)
         {
-            if (id != employee.EmployeeId)
+            if (id != presenceWork.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(employee).State = EntityState.Modified;
+            _context.Entry(presenceWork).State = EntityState.Modified;
 
             try
             {
@@ -62,7 +60,7 @@ namespace ModuleEmployees.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!EmployeeExists(id))
+                if (!PresenceWorkExists(id))
                 {
                     return NotFound();
                 }
@@ -75,36 +73,36 @@ namespace ModuleEmployees.Controllers
             return NoContent();
         }
 
-        // POST: api/Employees
+        // POST: api/PresenceWorks
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Employee>> PostEmployee(Employee employee)
+        public async Task<ActionResult<PresenceWork>> PostPresenceWork(PresenceWork presenceWork)
         {
-            _context.Employees.Add(employee);
+            _context.PresenceWorks.Add(presenceWork);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetEmployee", new { id = employee.EmployeeId }, employee);
+            return CreatedAtAction("GetPresenceWork", new { id = presenceWork.Id }, presenceWork);
         }
 
-        // DELETE: api/Employees/5
+        // DELETE: api/PresenceWorks/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEmployee(int id)
+        public async Task<IActionResult> DeletePresenceWork(int id)
         {
-            var employee = await _context.Employees.FindAsync(id);
-            if (employee == null)
+            var presenceWork = await _context.PresenceWorks.FindAsync(id);
+            if (presenceWork == null)
             {
                 return NotFound();
             }
 
-            _context.Employees.Remove(employee);
+            _context.PresenceWorks.Remove(presenceWork);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool EmployeeExists(int id)
+        private bool PresenceWorkExists(int id)
         {
-            return _context.Employees.Any(e => e.EmployeeId == id);
+            return _context.PresenceWorks.Any(e => e.Id == id);
         }
     }
 }

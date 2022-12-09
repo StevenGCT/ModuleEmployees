@@ -4,6 +4,7 @@ using ModuleEmployees.Context;
 using ModuleEmployees.Handler;
 using ModuleEmployees.Interfaces;
 using ModuleEmployees.Utils;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,10 @@ builder.Services.AddDbContext<AplicationDBContext>(options => options.UseSqlServ
 
 // Add services to the container.
 
+builder.Services.AddControllersWithViews()
+    .AddJsonOptions(options =>
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles
+);
 builder.Services.AddControllers();
 builder.Services.AddTransient<IImageHandler, ImageHandler>();
 builder.Services.AddTransient<IImageWriter, ImageWriter>();

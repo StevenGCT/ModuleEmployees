@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ModuleEmployees.Context;
 
@@ -11,9 +12,10 @@ using ModuleEmployees.Context;
 namespace ModuleEmployees.Migrations
 {
     [DbContext(typeof(AplicationDBContext))]
-    partial class AplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20221208230115_AddEmployeesExtra")]
+    partial class AddEmployeesExtra
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,6 +94,9 @@ namespace ModuleEmployees.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("PresenceExtraId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("RegisterDate")
                         .HasColumnType("datetime2");
 
@@ -109,6 +114,8 @@ namespace ModuleEmployees.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("EmployeeId");
+
+                    b.HasIndex("PresenceExtraId");
 
                     b.ToTable("Employees");
                 });
@@ -146,7 +153,7 @@ namespace ModuleEmployees.Migrations
                     b.ToTable("Events");
                 });
 
-            modelBuilder.Entity("ModuleEmployees.Models.PresenceWork", b =>
+            modelBuilder.Entity("ModuleEmployees.Models.PresenceExtra", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -154,15 +161,14 @@ namespace ModuleEmployees.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("DateAttenddance")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("DateAttenddance")
+                        .HasColumnType("int");
 
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("EventId")
+                        .HasColumnType("int");
 
                     b.Property<string>("StatusAttendance")
                         .IsRequired()
@@ -170,9 +176,9 @@ namespace ModuleEmployees.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployeeId");
+                    b.HasIndex("EventId");
 
-                    b.ToTable("PresenceWorks");
+                    b.ToTable("PresenceExtra");
                 });
 
             modelBuilder.Entity("ModuleEmployees.Models.Schedule", b =>
@@ -236,20 +242,28 @@ namespace ModuleEmployees.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ModuleEmployees.Models.PresenceWork", b =>
-                {
-                    b.HasOne("ModuleEmployees.Models.Employee", "Employee")
-                        .WithMany("PresenceWorks")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
-                });
-
             modelBuilder.Entity("ModuleEmployees.Models.Employee", b =>
                 {
-                    b.Navigation("PresenceWorks");
+                    b.HasOne("ModuleEmployees.Models.PresenceExtra", null)
+                        .WithMany("Employees")
+                        .HasForeignKey("PresenceExtraId");
+                });
+
+            modelBuilder.Entity("ModuleEmployees.Models.PresenceExtra", b =>
+                {
+                    b.HasOne("ModuleEmployees.Models.Event", null)
+                        .WithMany("PresenceExtras")
+                        .HasForeignKey("EventId");
+                });
+
+            modelBuilder.Entity("ModuleEmployees.Models.Event", b =>
+                {
+                    b.Navigation("PresenceExtras");
+                });
+
+            modelBuilder.Entity("ModuleEmployees.Models.PresenceExtra", b =>
+                {
+                    b.Navigation("Employees");
                 });
 #pragma warning restore 612, 618
         }
