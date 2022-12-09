@@ -17,11 +17,11 @@ namespace ModuleEmployees.Controllers
         {
             _context = context;
         }
-
-        [HttpPost("addEmployeesToEvent")]
+        
+        [HttpPost]
         public async Task<ActionResult<Event>> AddEmployeeEvent(EmployeeEvent employeeEvent)
-
         {
+            //Dictionary<int, object> keys = new Dictionary<int, object>();
             var evento = await _context.Events
                 .Where(c => c.EventId == employeeEvent.EventId)
                 .Include(c => c.Employees)
