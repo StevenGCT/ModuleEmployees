@@ -36,7 +36,7 @@ namespace ModuleEmployees.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Event>> GetEvent(int id)
         {
-            var @event = await _context.Events.FindAsync(id);
+            var @event = await _context.Events.Include(e => e.Employees).FirstOrDefaultAsync(e => e.EventId == id);
 
             if (@event == null)
             {
